@@ -5,7 +5,7 @@ const useVideoRecorder = () => {
   const [preview, setPreview] = useState(false);
   const [recording, setRecording] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [ispaused, setIsPaused] = useState(false);
   const mediaRecorderRef = useRef();
   const videoRef = useRef();
   const timerRef = useRef(null);
@@ -91,7 +91,7 @@ const useVideoRecorder = () => {
   // };
 
   // const pauseRecording = () => {
-  //   if (mediaRecorderRef.current && recording && !paused) {
+  //   if (mediaRecorderRef.current && recording && !ispaused) {
   //     mediaRecorderRef.current.pause();
   //     setPaused(true);
   //     stopTimer();
@@ -183,16 +183,16 @@ const useVideoRecorder = () => {
   }, []);
 
   const pauseRecording = useCallback(() => {
-    if (mediaRecorderRef.current && recording && !paused) {
+    if (mediaRecorderRef.current && recording && !ispaused) {
       mediaRecorderRef.current.pause();
-      setPaused(true);
+      setIsPaused(true);
       stopTimer();
-    } else if (mediaRecorderRef.current && recording && paused) {
+    } else if (mediaRecorderRef.current && recording && ispaused) {
       mediaRecorderRef.current.resume();
-      setPaused(false);
+      setIsPaused(false);
       startTimer();
     }
-  }, [recording, paused, startTimer, stopTimer]);
+  }, [recording, ispaused, startTimer, stopTimer]);
   return {
     startCamera,
     stopCamera,
@@ -201,7 +201,7 @@ const useVideoRecorder = () => {
     stopRecording,
     startRecording,
     pauseRecording,
-    paused,
+    ispaused,
     videoRef,
     formatTime,
     elapsedTime,
